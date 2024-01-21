@@ -1,22 +1,27 @@
+from __future__ import annotations
+
 from dataclasses import dataclass
 from pathlib import Path
 
 try:
     import tomllib
-except importError:
+except ImportError:
     import tomli as tomllib
 
-PATTERNS_FILE = Path(__file__).parent / "patterns.toml"
+PATTERNS_FILE = Path(__file__).parent / 'patterns.toml'
 
 
 def get_pattern(name, filename=PATTERNS_FILE):
-    data = tomllib.loads(filename.read_text(encoding="utf-8"))
+    data = tomllib.loads(filename.read_text(encoding='utf-8'))
     return Pattern.from_toml(name, toml_data=data[name])
 
 
 def get_all_patterns(filename=PATTERNS_FILE):
-    data = tomllib.loads(filename.read_text(encoding="utf-8"))
-    return [Pattern.from_toml(name, toml_data) for name, toml_data in data.items()]
+    data = tomllib.loads(filename.read_text(encoding='utf-8'))
+    return [
+        Pattern.from_toml(name, toml_data)
+        for name, toml_data in data.items()
+    ]
 
 
 @dataclass
@@ -28,5 +33,5 @@ class Pattern:
     def from_toml(cls, name, toml_data):
         return cls(
             name,
-            alive_cells={tuple(cell) for cell in toml_data["alive_cells"]},
+            alive_cells={tuple(cell) for cell in toml_data['alive_cells']},
         )

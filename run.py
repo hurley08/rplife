@@ -15,5 +15,12 @@ patterns.get_pattern('Blinker')
 
 patterns.get_all_patterns()
 
-
-CursesView(get_pattern('Glider Gun'), gen=100).show()
+plat = get_pattern('Pulsar')
+typus = get_pattern('Beacon')
+duck = get_pattern('Toad')
+plat.alive_cells = plat.alive_cells.union(typus.alive_cells)
+plat.alive_cells = plat.alive_cells.union(duck.alive_cells)
+CursesView(plat, gen=250).show()
+CursesView(get_pattern('Pulsar'), gen=10).show()
+CursesView(get_pattern('Beacon'), gen=25).show()
+CursesView(get_pattern('Toad'), gen=10).show()
