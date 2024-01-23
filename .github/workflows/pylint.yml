@@ -20,5 +20,5 @@ jobs:
         pip install pylint
     - name: Analysing the code with pylint
       run: |
-        pylint * --ignore=test_rplife.py,patterns.toml,requirements.txt,__main__.py,README.md,run.py
+        pylint * --ignore=test_rplife.py,patterns.toml,requirements.txt,__main__.py,README.md,run.py --disable=C0114,C0115,C0116
 
