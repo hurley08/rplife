@@ -14,7 +14,11 @@ class CursesView:
         self.bbox = bbox
 
     def show(self):
-        curses.wrapper(self._draw)
+        try:
+            curses.wrapper(self._draw)
+            return True
+        except:
+            return False
 
     def _draw(self, screen):
         current_grid = LifeGrid(self.pattern)
