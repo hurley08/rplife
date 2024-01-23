@@ -60,8 +60,8 @@ repos:
         types: [python]
         pass_filenames: true
 
-      - id: pylint
-        name: pylint
-        entry: pylint
+      - id: pylint-pytest
+        name: pylint-pytest
+        entry: pylint-pytest
         language: python
         types: [python]
