@@ -40,3 +40,19 @@ repos:
     hooks:
     -   id: mypy
         additional_dependencies: [types-all]
+-   repo: local
+    hooks:
+      - id: pytest
+        name: pytest
+        stages: [commit]
+        language: system
+        entry: pytest
+        types: [python]
+
+      - id: pytest-cov
+        name: pytest
+        stages: [push]
+        language: system
+        entry: pytest --cov --cov-fail-under=70
+        types: [python]
+        pass_filenames: true
