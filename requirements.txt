@@ -1,0 +1,6 @@
+pylint
+pytest
+pylint-pytest
+coverage 
+pre-commit
+
