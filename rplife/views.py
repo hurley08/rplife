@@ -17,8 +17,9 @@ class CursesView:
         try:
             curses.wrapper(self._draw)
             return True
-        except:
-            return False
+        except Exception as e:
+            print(e)
+	    return False
 
     def _draw(self, screen):
         current_grid = LifeGrid(self.pattern)
