@@ -3,6 +3,9 @@ repos:
     rev: v4.5.0
     hooks:
     -   id: trailing-whitespace
+    -   id: check-merge-conflict
+    -   id: check-docstring-first
+    -   id: check-ast
     -   id: end-of-file-fixer
     -   id: check-yaml
     -   id: debug-statements
@@ -53,6 +56,12 @@ repos:
         name: pytest
         stages: [push]
         language: system
-        entry: pytest --cov --cov-fail-under=70
+        entry: pytest --cov --cov-fail-under=250
         types: [python]
         pass_filenames: true
+
+      - id: pylint
+        name: pylint
+        entry: pylint
+        language: python
+        types: [python]
