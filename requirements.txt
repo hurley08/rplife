@@ -3,4 +3,7 @@ pytest
 pylint-pytest
 coverage 
 pre-commit
+black 
+flake8
+
 
