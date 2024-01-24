@@ -22,27 +22,27 @@ for i in o:
     gridl = grid.LifeGrid(i)
     for i in range(200):
         gridl.evolve()
-        print(gridl.as_string((0, 0, 20, 20)), end='/r', flush=True)
+        print(gridl.as_string((0, 0, 20, 20)), end="/r", flush=True)
 
 
 def _show_pattern(View, patter, args):
     """
-     Wrapper to handle any exceptions while stepping through generations
+    Wrapper to handle any exceptions while stepping through generations
     """
     try:
         View(pattern=patter, gen=args.gen, frame_rate=args.fps).show()
     except OSError as strerror:
-        print(f'I/O error({strerror}):')
+        print(f"I/O error({strerror}):")
     except ValueError:
-        print('Could not convert data to an integer.')
+        print("Could not convert data to an integer.")
     except:
-        print('Unexpected error:', sys.exc_info()[0])
+        print("Unexpected error:", sys.exc_info()[0])
         raise
 
 
 def main():
     """
-     Entry Point for rplife
+    Entry Point for rplife
     """
     args = get_command_line_args()
     View = getattr(views, args.view)

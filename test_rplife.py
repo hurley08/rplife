@@ -9,13 +9,13 @@ import pytest
 
 
 pat_name = [
-    'Blinker',
-    'Toad',
-    'Pulsar',
-    'Beacon',
-    'Bunnies',
-    'Glider',
-    'Glider Gun',
+    "Blinker",
+    "Toad",
+    "Pulsar",
+    "Beacon",
+    "Bunnies",
+    "Glider",
+    "Glider Gun",
 ]
 
 
@@ -45,6 +45,7 @@ def patterns():
 def get_pattern():
     """Imports get_pattern() method for later use"""
     from rplife.patterns import get_pattern
+
     return get_pattern
 
 
@@ -52,13 +53,14 @@ def get_pattern():
 def curses_view():
     """Imports CursesView() class for later use"""
     from rplife.views import CursesView
+
     return CursesView
 
 
 @pytest.fixture
 def pytest_set():
     """Turn list of patterns into parametrized format"""
-    val = ('test_pat', pat_name)
+    val = ("test_pat", pat_name)
     return val
 
 
@@ -81,13 +83,14 @@ def test_load_modules():
     assert True
 
 
-@pytest.mark.parametrize('p_names', pat_name)
+@pytest.mark.parametrize("p_names", pat_name)
 def test_lifegrid(get_pattern, patterns_set, p_names):
     """
     Use LifeGrid to create Pattern objects given name
     and alive cells attributes
     """
     from rplife.grid import LifeGrid
+
     p = LifeGrid(get_pattern(p_names))
     print(str(p))
     print(p.as_string)
@@ -97,6 +100,7 @@ def test_lifegrid(get_pattern, patterns_set, p_names):
 def test_get_all_patterns(patterns, get_pattern):
     """use get_pattern method, check the resulting list for type"""
     from rplife.patterns import Pattern
+
     result = patterns.get_all_patterns()
     assert isinstance(result, list)
     assert isinstance(result[0], Pattern)
@@ -105,35 +109,36 @@ def test_get_all_patterns(patterns, get_pattern):
     # assert (type(result[0]) != 'rplife.patterns.Pattern')
 
 
-@pytest.mark.parametrize('p_name', pat_name)
+@pytest.mark.parametrize("p_name", pat_name)
 def test_get_single_patterns(patterns, get_pattern, p_name):
     """use two different import methods to get_pattern a list of patterns"""
     from rplife.patterns import Pattern
+
     res = patterns.get_pattern(p_name)
-    assert isinstance(res,  Pattern)
+    assert isinstance(res, Pattern)
     # assert str(type(res)) == "<class 'rplife.patterns.Pattern'>"
     res = get_pattern(p_name)
-    assert isinstance(res,  Pattern)
+    assert isinstance(res, Pattern)
     # assert str(type(res)) == "<class 'rplife.patterns.Pattern'>"
 
 
 def test_alive_cells_blinker(patterns):
     """get pattern, test presence of alive_cells attribute"""
-    blink = patterns.get_pattern('Blinker')
+    blink = patterns.get_pattern("Blinker")
     assert blink.alive_cells == {(2, 3), (2, 1), (2, 2)}
 
 
 @pytest.mark.xfail
 @pytest.mark.parametrize(
-    'test_pattern',
+    "test_pattern",
     [
-        'Blinker',
-        'Toad',
-        'Pulsar',
-        'Beacon',
-        'Bunnies',
-        'Glider',
-        'Glider Gun',
+        "Blinker",
+        "Toad",
+        "Pulsar",
+        "Beacon",
+        "Bunnies",
+        "Glider",
+        "Glider Gun",
     ],
 )
 def test_cursesview_calls(curses_view, get_pattern, test_pattern):
@@ -144,7 +149,7 @@ def test_cursesview_calls(curses_view, get_pattern, test_pattern):
 
 @pytest.mark.xfail
 @pytest.mark.parametrize(
-    'f_rates',
+    "f_rates",
     [
         5,
         25,
@@ -162,7 +167,7 @@ def test_cursesview_rates(curses_view, get_pattern, patterns_set, f_rates):
 
 @pytest.mark.xfail
 @pytest.mark.parametrize(
-    'gens',
+    "gens",
     [
         5,
         25,

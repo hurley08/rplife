@@ -1,6 +1,5 @@
 pylint
 pytest
-pylint-pytest
-coverage 
-pre-commit
-
+pylint - pytest
+coverage
+pre - commit

@@ -11,7 +11,7 @@ from rplife.grid import LifeGrid
 from rplife.patterns import Pattern
 
 
-__all__ = ['CursesView']
+__all__ = ["CursesView"]
 
 
 class CursesView:
@@ -32,7 +32,6 @@ class CursesView:
         self.frame_rate = frame_rate
         self.bbox = bbox
 
-        
     def show(self) -> bool:
         """Wraps _draw"""
         try:
@@ -40,15 +39,14 @@ class CursesView:
             return True
 
         except OSError as strerror:
-            print(f'I/O error({strerror})')
+            print(f"I/O error({strerror})")
         except ValueError:
-            print('Could not convert data to an integer.')
+            print("Could not convert data to an integer.")
         except:
-            print('Unexpected error:', sys.exc_info()[0])
+            print("Unexpected error:", sys.exc_info()[0])
             raise
         return False
 
-      
     def _draw(self, screen):
         """Draws a window with dimensions of bbox"""
         current_grid = LifeGrid(self.pattern)
@@ -57,15 +55,15 @@ class CursesView:
 
         try:
             screen.addstr(0, 0, current_grid.as_string(self.bbox))
-            print(f'Success in {self.bbox=}')
+            print(f"Success in {self.bbox=}")
         except OSError as strerror:
-            print(f'I/O error({strerror})')
+            print(f"I/O error({strerror})")
             screen.refresh()
         except ValueError:
-            print('Could not convert data to an integer.')
+            print("Could not convert data to an integer.")
             screen.refresh()
         except:
-            print('Unexpected error:', sys.exc_info()[0])
+            print("Unexpected error:", sys.exc_info()[0])
             screen.refresh()
             raise
 

@@ -6,8 +6,8 @@ from __future__ import annotations
 import collections
 
 
-ALIVE = '♥'
-DEAD = '‧'
+ALIVE = "♥"
+DEAD = "‧"
 
 
 class LifeGrid:
@@ -59,14 +59,14 @@ class LifeGrid:
                 ALIVE if (row, col) in self.pattern.alive_cells else DEAD
                 for col in range(start_col, end_col)
             ]
-            display.append(' '.join(display_row))
-        return '\n '.join(display)
+            display.append(" ".join(display_row))
+        return "\n ".join(display)
 
     def __str__(self):
         """
         Pretty print
         """
         return (
-            f'{self.pattern.name}:\n'
-            f'Alive cells -> {sorted(self.pattern.alive_cells)}'
+            f"{self.pattern.name}:\n"
+            f"Alive cells -> {sorted(self.pattern.alive_cells)}"
         )
