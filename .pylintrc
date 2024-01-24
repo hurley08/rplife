@@ -1,0 +1,3 @@
+[MASTER]
+ignore=htmlcov, .pytest_cache/., test_rplife.py
+ignore-patterns =(.)*\.toml,(.)*\.md

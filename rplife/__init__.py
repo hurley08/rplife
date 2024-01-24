@@ -1,1 +1,5 @@
-__version__ = "1.0.0"
+"""
+Why does this need a docstring
+"""
+from __future__ import annotations
+__version__ = '1.0.0'

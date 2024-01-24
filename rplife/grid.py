@@ -1,15 +1,27 @@
+"""
+Implements LifeGrid
+"""
+from __future__ import annotations
+
 import collections
 
 
-ALIVE = "♥"
-DEAD = "‧"
+ALIVE = '♥'
+DEAD = '‧'
 
 
 class LifeGrid:
+    """
+    Draws the board on which patterns can be drawn
+    """
+
     def __init__(self, pattern):
         self.pattern = pattern
 
     def evolve(self):
+        """
+        Applies rules to 'evolve' pattern into next state
+        """
         neighbors = (
             (-1, -1),  # Above left
             (-1, 0),  # Above
@@ -36,6 +48,10 @@ class LifeGrid:
         self.pattern.alive_cells = stay_alive | come_alive
 
     def as_string(self, bbox):
+        """
+        Iterates through the rows of matrix (bbox) and
+        draws characters per cell
+        """
         start_col, start_row, end_col, end_row = bbox
         display = [self.pattern.name.center(2 * (end_col - start_col))]
         for row in range(start_row, end_row):
@@ -43,11 +59,14 @@ class LifeGrid:
                 ALIVE if (row, col) in self.pattern.alive_cells else DEAD
                 for col in range(start_col, end_col)
             ]
-            display.append(" ".join(display_row))
-        return "\n ".join(display)
+            display.append(' '.join(display_row))
+        return '\n '.join(display)
 
     def __str__(self):
+        """
+        Pretty print
+        """
         return (
-            f"{self.pattern.name}:\n"
-            f"Alive cells -> {sorted(self.pattern.alive_cells)}"
+            f'{self.pattern.name}:\n'
+            f'Alive cells -> {sorted(self.pattern.alive_cells)}'
         )

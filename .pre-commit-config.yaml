@@ -62,6 +62,6 @@ repos:
 
       - id: pylint-pytest
         name: pylint-pytest
-        entry: pylint-pytest
+        entry: pylint --load-plugins pylint_pytest *
         language: python
         types: [python]

@@ -1,5 +1,17 @@
-import patterns
+"""
+This is just a test
+"""
+from __future__ import annotations
 
+import sys
+
+from rplife import patterns
+from rplife import views
+from rplife.cli import get_command_line_args
+
+"""
+pylint is annoying
+"""
 o = patterns.get_all_patterns()
 
 for i in o:
@@ -8,10 +20,45 @@ for i in o:
         b = (t[0] * 3, t[0] * 3, 0, 0)
     else:
         b = (0, 0, t[1] * 3, t[1] * 3)
-    import grid
+    from rplife import grid
 
-    grid = grid.LifeGrid(i)
-    print(grid.as_string((0, 0, 20, 20)))
+    gridl = grid.LifeGrid(i)
     for i in range(200):
-        grid.evolve()
-        print(grid.as_string((0, 0, 20, 20)), end="/r", flush=True)
+        gridl.evolve()
+        print(gridl.as_string((0, 0, 20, 20)), end='/r', flush=True)
+
+
+def _show_pattern(View, patter, args):
+    """
+     Wrapper to handle any exceptions while stepping through generations
+    """
+    try:
+        View(pattern=patter, gen=args.gen, frame_rate=args.fps).show()
+    except OSError as strerror:
+        print(f'I/O error({strerror}):')
+    except ValueError:
+        print('Could not convert data to an integer.')
+    except:
+        print('Unexpected error:', sys.exc_info()[0])
+        raise
+
+
+def main():
+    """
+     Entry Point for rplife
+    """
+    args = get_command_line_args()
+    View = getattr(views, args.view)
+    if args.all:
+        for pattern in patterns.get_all_patterns():
+            _show_pattern(View, pattern, args)
+    else:
+        _show_pattern(
+            View,
+            patterns.get_pattern(name=args.pattern),
+            args,
+        )
+
+
+if __name__ == '__main__':
+    main()
