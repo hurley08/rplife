@@ -56,3 +56,10 @@ class Pattern:
             name,
             alive_cells={tuple(cell) for cell in toml_data['alive_cells']},
         )
+
+    @classmethod
+    def get_size(cls):
+        x, y = zip(*cls.alive_cells)
+        minx, maxx = min(x), max(x)
+        miny, maxy = min(y), max(y)
+        return maxx - minx + 1, maxy - miny + 1

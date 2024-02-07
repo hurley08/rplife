@@ -11,9 +11,6 @@ from rplife.grid import LifeGrid
 from rplife.patterns import Pattern
 
 
-__all__ = ['CursesView']
-
-
 class CursesView:
     """
     Draws visuals of pattern in its current state
@@ -24,7 +21,7 @@ class CursesView:
         pattern: Pattern,
         gen: int = 10,
         frame_rate: int = 20,
-        bbox: tuple = (0, 0, 40, 80),
+        bbox: tuple = (0, 0, 80, 80),
     ) -> None:
         """Initialize"""
         self.pattern = pattern
@@ -32,7 +29,6 @@ class CursesView:
         self.frame_rate = frame_rate
         self.bbox = bbox
 
-        
     def show(self) -> bool:
         """Wraps _draw"""
         try:
@@ -48,15 +44,13 @@ class CursesView:
             raise
         return False
 
-      
     def _draw(self, screen):
         """Draws a window with dimensions of bbox"""
         current_grid = LifeGrid(self.pattern)
         curses.curs_set(0)
-        screen.clear()
-
+        print(current_grid.as_string)
         try:
-            screen.addstr(0, 0, current_grid.as_string(self.bbox))
+            screen.addstr(current_grid.as_string(self.bbox))
             print(f'Success in {self.bbox=}')
         except OSError as strerror:
             print(f'I/O error({strerror})')
@@ -64,13 +58,24 @@ class CursesView:
         except ValueError:
             print('Could not convert data to an integer.')
             screen.refresh()
-        except:
-            print('Unexpected error:', sys.exc_info()[0])
+        except curses.error as e:
+            print(f"'Unexpected error:', sys.exc_info()[0] {e}")
+            # screen.move(120,120)
             screen.refresh()
-            raise
+            print(current_grid.as_string((0, 0, 20, 20)))
+            raise Exception(self.bbox, self.pattern.get_size())
 
         for _ in range(self.gen):
-            current_grid.evolve()
-            screen.addstr(0, 0, current_grid.as_string(self.bbox))
-            screen.refresh()
-            sleep(1 / self.frame_rate)
+            try:
+                current_grid.evolve()
+                screen.addstr(current_grid.as_string(self.bbox))
+                screen.refresh()
+                sleep(1 / self.frame_rate)
+            except:
+                current_grid.evolve()
+                screen.addstr(0, 0, current_grid.as_string(self.bbox))
+                screen.refresh()
+                sleep(1 / self.frame_rate)
+
+
+__all__ = ['CursesView']

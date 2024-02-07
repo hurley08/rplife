@@ -5,6 +5,9 @@
 """
 from __future__ import annotations
 
+import argparse
+import subprocess
+
 import pytest
 
 
@@ -29,6 +32,12 @@ def test_imports():
     print(rplife.views)
     """To suppress not used error"""
     assert True
+
+
+@pytest.fixture
+def get_cli():
+    from rplife.cli import get_command_line_args
+    return get_command_line_args
 
 
 @pytest.fixture
@@ -176,3 +185,19 @@ def test_cursesview_gen(curses_view, get_pattern, patterns_set, gens):
     for i in patterns_set:
         d = curses_view(get_pattern(i), frame_rate=200, gen=gens).show()
         assert d in (False, None)
+
+
+def test_parser_defaults(get_cli):
+    """ Verify values of argparse defaults"""
+    parser = get_cli()
+    assert parser.pattern == 'Blinker'
+    assert parser.all == False
+    assert parser.view == 'CursesView'
+    assert parser.gen == 10
+    assert parser.fps == 7
+
+
+def test_parser_return_code(get_cli):
+    completed_process = subprocess.run(
+        ['python3', 'rplife/cli.py', '--pattern Bunnies', '--gen 35', '--fps 200'])
+    assert completed_process.returncode == 0

@@ -9,9 +9,9 @@ import sys
 try:
     from rplife import patterns
     from rplife.patterns import get_pattern
-    from rplife.views import CursesView
-except IOError as (errno, strerror):
-    print('I/O error({}): {}'.format(errno, strerror))
+    from rplife.views import *
+except IOError as (strerror):
+    print('I/O error({}):'.format(strerror))
 except ValueError:
     print('Could not convert data to an integer.')
 except:

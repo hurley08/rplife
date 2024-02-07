@@ -5,9 +5,9 @@ from __future__ import annotations
 
 import sys
 
+from rplife import cli
 from rplife import patterns
 from rplife import views
-from rplife.cli import get_command_line_args
 
 """
 pylint is annoying
@@ -28,12 +28,12 @@ for i in o:
         print(gridl.as_string((0, 0, 20, 20)), end='/r', flush=True)
 
 
-def _show_pattern(View, patter, args):
+def _show_pattern(View, pattern, args):
     """
      Wrapper to handle any exceptions while stepping through generations
     """
     try:
-        View(pattern=patter, gen=args.gen, frame_rate=args.fps).show()
+        View(pattern=pattern, gen=args.gen, frame_rate=args.fps).show()
     except OSError as strerror:
         print(f'I/O error({strerror}):')
     except ValueError:
@@ -47,7 +47,7 @@ def main():
     """
      Entry Point for rplife
     """
-    args = get_command_line_args()
+    args = cli.get_command_line_args()
     View = getattr(views, args.view)
     if args.all:
         for pattern in patterns.get_all_patterns():
